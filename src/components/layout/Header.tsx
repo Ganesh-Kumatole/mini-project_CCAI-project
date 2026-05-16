@@ -1,29 +1,16 @@
-import { useThemeContext } from '@/context/ThemeContext';
-import { useAuthContext } from '@/context/AuthContext';
+import { useThemeContext, useAuthContext } from '@/context';
 import { NotificationBell } from '@/components/common/NotificationBell';
 import { Link } from 'react-router-dom';
+import { getInitials } from '@/utils';
+import { HeaderProps } from '@/types';
 
-interface HeaderProps {
-  toggleSidebar: (open: boolean) => void;
-  title?: string;
-}
-
-function getInitials(name: string | null | undefined): string {
-  if (!name) return '?';
-  return name
-    .split(' ')
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-}
-
-export const Header = ({ toggleSidebar, title }: HeaderProps) => {
+const Header = ({ toggleSidebar, title }: HeaderProps) => {
   const { toggleTheme, theme } = useThemeContext();
   const { user } = useAuthContext();
 
   return (
     <header className="h-16 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-6 sticky top-0 z-20">
+      {/* Hamburger Menu */}
       <div className="flex items-center gap-4">
         <button
           onClick={() => toggleSidebar(true)}
@@ -88,3 +75,5 @@ export const Header = ({ toggleSidebar, title }: HeaderProps) => {
     </header>
   );
 };
+
+export { Header };
